@@ -54,6 +54,7 @@ public class UserResouces {
 		try {
 			this.userServiceImplementation.registerUser(User.builder().email(userDto.getEmail()).name(userDto.getName()).build());
 		}catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
 		}		
 		return new ResponseEntity<Object>(userDto,HttpStatus.OK);
@@ -89,7 +90,7 @@ public class UserResouces {
 		return new ResponseEntity<Object>(new TokenResponse(token),HttpStatus.OK);
 	}
 	
-	@GetMapping("/getUser")
+	@PostMapping("/getUser")
 	public UserDto getUser(Principal principal) {
 		String email=principal.getName();
 		User user=this.userServiceImplementation.getUser(email);

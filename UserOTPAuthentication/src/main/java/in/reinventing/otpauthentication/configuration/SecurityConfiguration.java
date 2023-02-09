@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import in.reinventing.otpauthentication.externalservice.MyUserDetailsService;
 
@@ -35,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeHttpRequests().antMatchers("/register","/validate_otp","/generate_otp").permitAll().anyRequest().authenticated();
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
 	}
 	
 	@Bean
